@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- build:css css/app.css -->
+    <!--<link rel="stylesheet" href="css/home.css">-->
+    <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- endbuild -->
+
+    <!-- build:js scripts/vendor.js -->
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js scripts/app.js -->
+    <script src="app.js"></script>
+    <script src="controllers/MainController.js"></script>
+    <!-- endbuild -->
+
+</head>
+
+<body ng-app="app">
+  <div ng-controller="MainController">
+  <div ng-hide="play">You chose poorly ...</div>
+  <div ng-show="success">You chose wisely</div>
+  <table>
+    <tr ng-repeat="row in grid">
+      <td ng-repeat="cell in row" ng-hide="cell.state==-2">
+        <img ng-show="cell.revealed || !play" src="images/{{cell.state}}.bmp"/>
+        <img ng-show="cell.flaged && !cell.revealed && play" src="images/flag.bmp" ng-right-click="onRightClick(cell.x, cell.y)"/>
+        <img ng-show="!cell.revealed && !cell.flaged && play" src="images/unknown.bmp" ng-click="onClick(cell.x, cell.y)" ng-right-click="onRightClick(cell.x, cell.y)"/>
+      </td>
+    </tr>
+  </table>
+  <div>
+    <h2>Choose your difficulty :</h2>
+    <button ng-click="init(8,8,10)">Easy</button>
+    <button ng-click="init(16,16,40)">Medium</button>
+    <button ng-click="init(16,30,99)">Hard</button>
+  </div>
+  <div>Time : {{time}}</div>
+  <div>Remaining mines : {{minesCount - caseFlagged}} <span ng-show="(minesCount - caseFlagged) < 0">Do you even know what you are doing ;)</span></div>
+</div>
+</body>
+
+</html>

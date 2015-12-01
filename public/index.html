@@ -20,27 +20,34 @@
 </head>
 
 <body ng-app="app">
-  <div ng-controller="MainController">
-  <div ng-hide="play">You chose poorly ...</div>
-  <div ng-show="success">You chose wisely</div>
-  <table>
-    <tr ng-repeat="row in grid">
-      <td ng-repeat="cell in row" ng-hide="cell.state==-2">
-        <img ng-show="cell.revealed || !play" src="images/{{cell.state}}.bmp"/>
-        <img ng-show="cell.flaged && !cell.revealed && play" src="images/flag.bmp" ng-right-click="onRightClick(cell.x, cell.y)"/>
-        <img ng-show="!cell.revealed && !cell.flaged && play" src="images/unknown.bmp" ng-click="onClick(cell.x, cell.y)" ng-right-click="onRightClick(cell.x, cell.y)"/>
-      </td>
-    </tr>
-  </table>
-  <div>
-    <h2>Choose your difficulty :</h2>
-    <button ng-click="init(8,8,10)">Easy</button>
-    <button ng-click="init(16,16,40)">Medium</button>
-    <button ng-click="init(16,30,99)">Hard</button>
+  <div ng-controller="MainController" class="container-fluid" style="text-align: center;">
+    <div class="alert alert-danger" ng-hide="play">You chose poorly ...</div>
+    <div class="alert alert-success" ng-show="success">You chose wisely</div>
+    <div class="alert alert-warning" ng-show="play && !success">Be careful ! Do not click on a mine !</div>
+    <div>
+      <div class="row" style="padding-bottom: 10px;">
+        <div class="col-md-4"></div>
+        <div class="col-md-2"><span class="label label-primary">{{time/10}}</label></div>
+        <div class="col-md-2">Remaining mines : <span class="badge">{{minesCount - caseFlagged}}</span> <span ng-show="(minesCount - caseFlagged) < 0">Are you sure you know what you are doing ?</span></div>
+      </div>
+      <div class="btn-group btn-group-lg" role="group" style="padding-bottom: 10px;">
+        <button class="btn btn-success" ng-click="init(8,8,10)">Easy</button>
+        <button class="btn btn-warning" ng-click="init(16,16,40)">Medium</button>
+        <button class="btn btn-danger"ng-click="init(16,30,99)">Hard</button>
+      </div>
+    </div>
+    <div>
+      <table style="border-spacing: 0px 0px; border-collapse: collapse; cellspacing: 0; cellspacing" align="center">
+        <tr ng-repeat="row in grid" style="margin:0; padding: 0; border:0;">
+          <td ng-repeat="cell in row" ng-hide="cell.state==-2">
+            <img ng-show="cell.revealed || !play" src="images/{{cell.state}}.bmp" style="display:block;"/>
+            <img ng-show="cell.flaged && !cell.revealed && play" src="images/flag.bmp" ng-right-click="onRightClick(cell.x, cell.y)" style="display:block;"/>
+            <img ng-show="!cell.revealed && !cell.flaged && play" src="images/unknown.bmp" ng-click="onClick(cell.x, cell.y)" ng-right-click="onRightClick(cell.x, cell.y)" style="display:block;"/>
+          </td>
+        </tr>
+      </table>
+    </div>
   </div>
-  <div>Time : {{time}}</div>
-  <div>Remaining mines : {{minesCount - caseFlagged}} <span ng-show="(minesCount - caseFlagged) < 0">Do you even know what you are doing ;)</span></div>
-</div>
 </body>
 
 </html>

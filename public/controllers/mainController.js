@@ -85,7 +85,7 @@
       console.log('y : ' + y);
       console.log($scope.grid[x][y].state);
       if($scope.timer==undefined){
-        $scope.timer = $interval(timer, 10);
+        $scope.timer = $interval(timer, 100);
       }
       if($scope.grid[x][y].state == -1){
         $scope.play = false;
@@ -94,17 +94,14 @@
       }
       else if ($scope.grid[x][y].state >= 0) {
         revealCase(x,y);
-        $scope.success = isSuccess;
+        $scope.success = isSuccess();
       }
     }
 
     function timer(){
-      $scope.time = $scope.time + 0.01;
+      $scope.time = $scope.time + 1;
     }
 
-/**
-  Améliorer cet algo tout pourri
-*/
 
     function revealCase(x, y){
       var item = $scope.grid[x][y];
@@ -113,8 +110,6 @@
         if(item.state == 0){
           for(var e=-1; e<=1; e++){
             for(var f = -1; f<=1; f++){
-                console.log(x+e);
-                console.log(y+f);
                 revealCase(x+e,y+f);
             }
           }
@@ -155,6 +150,9 @@
         success = success && $scope.grid[item.x][item.y].flaged;
         i++;
       }
+      if(success){
+        console.log('Success flag');
+      }
       return success;
     }
 
@@ -171,6 +169,9 @@
           j++;
         }
         i++;
+      }
+      if(success){
+        console.log('Success grid');
       }
       return success;
     }

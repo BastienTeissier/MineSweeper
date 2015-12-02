@@ -7,7 +7,7 @@
   ],
   "license": "ISC",
   "moduleType": [],
-  "homepage": "",
+  "homepage": "public/index.html",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -16,6 +16,7 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.6"
+    "bootstrap": "~3.3.6",
+    "angular": "~1.4.8"
   }
 }

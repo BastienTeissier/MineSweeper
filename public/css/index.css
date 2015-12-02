@@ -1,0 +1,19 @@
+#page-container{
+  text-align: center;
+}
+
+.padding-bottom{
+  padding-bottom: 10px;
+}
+
+.img-cell{
+  display:block;
+}
+
+#success{
+  color: green;
+}
+
+#fail{
+  color: red;
+}

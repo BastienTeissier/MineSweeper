@@ -3,7 +3,7 @@
 
 <head>
     <!-- build:css css/app.css -->
-    <!--<link rel="stylesheet" href="css/home.css">-->
+    <link rel="stylesheet" href="css/index.css">
     <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
     <!-- endbuild -->
 
@@ -15,38 +15,59 @@
     <!-- build:js scripts/app.js -->
     <script src="app.js"></script>
     <script src="controllers/MainController.js"></script>
+    <script src="services/mainServices.js"></script>
+    <script src="directives/directive.js"></script>
     <!-- endbuild -->
 
 </head>
 
 <body ng-app="app">
-  <div ng-controller="MainController" class="container-fluid" style="text-align: center;">
+  <div ng-controller="MainController" id="page-container" class="container-fluid">
+
+    <!-- Alert zone -->
+      <!-- Alert when the player loose -->
     <div class="alert alert-danger" ng-hide="play">You chose poorly ...</div>
+        <!-- Alert when the player win -->
     <div class="alert alert-success" ng-show="success">You chose wisely</div>
+        <!-- Alert during the game -->
     <div class="alert alert-warning" ng-show="play && !success">Be careful ! Do not click on a mine !</div>
+    <!-- endof AlertZone-->
     <div>
-      <div class="row" style="padding-bottom: 10px;">
+      <!-- Information zone -->
+      <div class="row padding-bottom">
         <div class="col-md-4"></div>
-        <div class="col-md-2"><span class="label label-primary">{{time/10}}</label></div>
-        <div class="col-md-2">Remaining mines : <span class="badge">{{minesCount - caseFlagged}}</span> <span ng-show="(minesCount - caseFlagged) < 0">Are you sure you know what you are doing ?</span></div>
+        <!-- Timer -->
+        <div class="col-md-2 padding-bottom"><span class="label label-primary">{{time/10}}</label></div>
+        <!-- Number of Flags -->
+        <div class="col-md-2 padding-bottom">Remaining mines : <span class="badge">{{minesCount - caseFlagged}}</span> <span ng-show="(minesCount - caseFlagged) < 0">Are you sure ?</span></div>
       </div>
-      <div class="btn-group btn-group-lg" role="group" style="padding-bottom: 10px;">
-        <button class="btn btn-success" ng-click="init(8,8,10)">Easy</button>
-        <button class="btn btn-warning" ng-click="init(16,16,40)">Medium</button>
-        <button class="btn btn-danger"ng-click="init(16,30,99)">Hard</button>
+      <!-- End of information zone-->
+
+      <!-- Difficulty selection zone-->
+      <div class="btn-group btn-group-lg padding-bottom" role="group">
+        <button class="btn btn-success" ng-click="initEasy()">Easy</button>
+        <button class="btn btn-warning" ng-click="initMedium()">Medium</button>
+        <button class="btn btn-danger"ng-click="initHard()">Hard</button>
       </div>
+      <!-- End of difficulty selection zone-->
     </div>
     <div>
-      <table style="border-spacing: 0px 0px; border-collapse: collapse; cellspacing: 0; cellspacing" align="center">
-        <tr ng-repeat="row in grid" style="margin:0; padding: 0; border:0;">
+      <!-- Mine sweeper-->
+      <table align="center">
+        <tr ng-repeat="row in grid">
           <td ng-repeat="cell in row" ng-hide="cell.state==-2">
-            <img ng-show="cell.revealed || !play" src="images/{{cell.state}}.bmp" style="display:block;"/>
-            <img ng-show="cell.flaged && !cell.revealed && play" src="images/flag.bmp" ng-right-click="onRightClick(cell.x, cell.y)" style="display:block;"/>
-            <img ng-show="!cell.revealed && !cell.flaged && play" src="images/unknown.bmp" ng-click="onClick(cell.x, cell.y)" ng-right-click="onRightClick(cell.x, cell.y)" style="display:block;"/>
+            <img class="img-cell" ng-show="cell.revealed || !play" src="images/{{cell.state}}.bmp"/>
+            <img class="img-cell" ng-show="cell.flagged && !cell.revealed && play" src="images/flag.bmp" ng-right-click="onRightClick(cell.x, cell.y)"/>
+            <img class="img-cell" ng-show="!cell.revealed && !cell.flagged && play" src="images/unknown.bmp" ng-click="onClick(cell.x, cell.y)" ng-right-click="onRightClick(cell.x, cell.y)"/>
           </td>
         </tr>
       </table>
+      <!-- End of minesweeper-->
     </div>
+    <!-- Failure message-->
+    <h1 id="fail" ng-hide="play">Try again !</h1>
+    <!-- Congratulation message -->
+    <h1 id="success" ng-show="success">Congratulation !</h1>
   </div>
 </body>
 

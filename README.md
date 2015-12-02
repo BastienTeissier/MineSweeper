@@ -2,13 +2,13 @@
 
 ## Install
 First install the bower dependencies :
-’bower install’
+`bower install`
 
 Then the npm dependencies :
-’npm install’
+`npm install`
 
 ## Getting started
 To play the minesweeper :
-’gulp connect’
+`gulp connect`
 
-Then go to : localhost:4000
+Then go to : `localhost:4000`
